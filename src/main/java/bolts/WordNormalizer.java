@@ -29,7 +29,6 @@ public class WordNormalizer extends BaseBasicBolt {
             }
         }
 	}
-	
 
 	/**
 	 * The bolt will only emit the field "word" 

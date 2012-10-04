@@ -1,5 +1,8 @@
 package bolts;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,14 +24,21 @@ public class WordCounter extends BaseBasicBolt {
 	 */
 	@Override
 	public void cleanup() {
-		System.out.println("-- Word Counter ["+name+"-"+id+"] --");
-		for(Map.Entry<String, Integer> entry : counters.entrySet()){
-			System.out.println(entry.getKey()+": "+entry.getValue());
-		}
+		try {
+            BufferedWriter out = new BufferedWriter(new FileWriter("src/main/resources/out.txt"));
+            System.out.println("-- Word Counter ["+name+"-"+id+"] --");
+            for (Map.Entry<String, Integer> entry : counters.entrySet()) {
+                System.out.println(entry.getKey()+": "+entry.getValue());            
+                out.write(entry.getKey()+": "+entry.getValue()+"\n");                
+            }
+            out.close();
+        } catch (IOException e) {
+        	e.printStackTrace();
+        }
 	}
 
 	/**
-	 * On create 
+	 * On create
 	 */
 	@Override
 	public void prepare(Map stormConf, TopologyContext context) {
@@ -48,9 +58,9 @@ public class WordCounter extends BaseBasicBolt {
 		 * If the word dosn't exist in the map we will create
 		 * this, if not we will add 1 
 		 */
-		if(!counters.containsKey(str)){
+		if (!counters.containsKey(str)) {
 			counters.put(str, 1);
-		}else{
+		} else {
 			Integer c = counters.get(str) + 1;
 			counters.put(str, c);
 		}

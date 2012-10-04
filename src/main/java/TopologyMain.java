@@ -9,28 +9,28 @@ import bolts.WordNormalizer;
 
 public class TopologyMain {
 	public static void main(String[] args) throws InterruptedException {
-         
+        
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
+		
 		builder.setSpout("reader",new WordReader());
+		
 		builder.setBolt("normalizer", new WordNormalizer())
 			.shuffleGrouping("reader");
-		builder.setBolt("counter", new WordCounter(),1)
+		
+		builder.setBolt("counter", new WordCounter())
 			.fieldsGrouping("normalizer", new Fields("word"));
 		
         //Configuration
 		Config conf = new Config();
+		conf.setMaxTaskParallelism(3);
+		conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 3);
+		conf.setDebug(true);
 		
-		//conf.put("wordsFile", args[0]);
-		
-		conf.put("wordsFile", "src/main/resources/words.txt");
-		
-		conf.setDebug(false);
         //Topology run
-		conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 1);
 		LocalCluster cluster = new LocalCluster();
 		cluster.submitTopology("storm-wordcount", conf, builder.createTopology());
-		Thread.sleep(1000);
+		Thread.sleep(30000);
 		cluster.shutdown();
 	}
 }
