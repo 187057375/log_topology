@@ -43,7 +43,7 @@ public class WordReader extends BaseRichSpout {
 		 * The nextTuple it is called forever, so if we have been read the file
 		 * we will wait and then return
 		 */
-		System.out.println("Arquivo de entrada: ");
+		System.out.println("Entry file path: ");
 		InputStreamReader filePath = new InputStreamReader(System.in);
 		BufferedReader in = new BufferedReader(filePath);
 		
