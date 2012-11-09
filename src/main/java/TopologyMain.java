@@ -1,3 +1,4 @@
+import spouts.WordGenerator;
 import spouts.WordReader;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -13,10 +14,15 @@ public class TopologyMain {
         //Topology definition
 		TopologyBuilder builder = new TopologyBuilder();
 		
-		builder.setSpout("reader",new WordReader());
+		//builder.setSpout("reader",new WordReader());
+		
+		//builder.setBolt("normalizer", new WordNormalizer())
+		//	.shuffleGrouping("reader");
+		
+		builder.setSpout("generator",new WordGenerator());
 		
 		builder.setBolt("normalizer", new WordNormalizer())
-			.shuffleGrouping("reader");
+			.shuffleGrouping("generator");
 		
 		builder.setBolt("counter", new WordCounter())
 			.fieldsGrouping("normalizer", new Fields("word"));
