@@ -24,7 +24,7 @@ public class WordNormalizer extends BaseBasicBolt {
         for(String word : words){
             word = word.trim();
             if(!word.isEmpty()){
-                word = word.toLowerCase();
+                //word = word.toLowerCase();
                 collector.emit(new Values(word));
             }
         }
