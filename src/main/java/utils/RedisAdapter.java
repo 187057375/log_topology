@@ -14,22 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package twister.core.io.input;
+package utils;
 
 
 /**
  *  Adapter based on {@link org.apache.commons.io.input.TailerListener}.
  *
  */
-public class TailerListenerAdapter implements TailerListener {
+public class RedisAdapter implements RedisListener {
 
     /**
      * The tailer will call this method during construction,
      * giving the listener a method of stopping the tailer.
      * @param tailer the tailer.
      */
-    public void init(Tailer tailer) {
-    }
+//    public void init(Tailer tailer) {
+//    }
 
     /**
      * This method is called if the tailed file is not found.
@@ -37,12 +37,7 @@ public class TailerListenerAdapter implements TailerListener {
     public void fileNotFound() {
     }
 
-    /**
-     * Called if a file rotation is detected.
-     *
-     * This method is called before the file is reopened, and fileNotFound may
-     * be called if the new file has not yet been created.
-     */
+
     public void fileRotated() {
     }
 

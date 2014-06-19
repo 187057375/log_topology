@@ -11,16 +11,12 @@ public class WordNormalizer extends BaseBasicBolt {
 
 	public void cleanup() {}
 
-	/**
-	 * The bolt will receive the line from the
-	 * words file and process it to Normalize this line
-	 * 
-	 * The normalize will be put the words in lower case
-	 * and split the line to get all words in this 
-	 */
 	public void execute(Tuple input, BasicOutputCollector collector) {
         String sentence = input.getString(0);
-        collector.emit(new Values(sentence));
+        
+        if(sentence != ""){
+        	collector.emit(new Values(sentence));
+        }
 //        String[] words = sentence.split(" ");
 //        for(String word : words){
 //            word = word.trim();
@@ -31,9 +27,6 @@ public class WordNormalizer extends BaseBasicBolt {
 //        }
 	}
 
-	/**
-	 * The bolt will only emit the field "word" 
-	 */
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields("word"));
 	}

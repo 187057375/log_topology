@@ -32,17 +32,11 @@ public class WordReader extends BaseRichSpout {
 		System.out.println("FAIL:"+msgId);
 	}
 
-	/**
-	 * The only thing that the methods will do It is emit each 
-	 * file line
-	 */
+
 	@Override
 	public void nextTuple() {
 		Utils.sleep(500);
-		/**
-		 * The nextTuple it is called forever, so if we have been read the file
-		 * we will wait and then return
-		 */
+
 		System.out.println("Entry file path: ");
 		InputStreamReader filePath = new InputStreamReader(System.in);
 		BufferedReader in = new BufferedReader(filePath);
@@ -69,18 +63,13 @@ public class WordReader extends BaseRichSpout {
 		}
 	}
 
-	/**
-	 * We will create the file and get the collector object
-	 */
+
 	@Override
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
 		this.collector = collector;
 	}
 
-	/**
-	 * Declare the output field "word"
-	 */
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields("line"));

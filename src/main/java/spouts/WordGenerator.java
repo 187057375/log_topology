@@ -37,10 +37,7 @@ public class WordGenerator extends BaseRichSpout {
 		System.out.println("FAIL:"+msgId);
 	}
 
-	/**
-	 * The only thing that the methods will do It is emit each 
-	 * file line
-	 */
+
 	@Override
 	public void nextTuple() {
 		//Utils.sleep(1);
@@ -57,9 +54,8 @@ public class WordGenerator extends BaseRichSpout {
 		this.collector.emit(new Values(""+characters[rand.nextInt(characters.length)]));
 	}
 
-	/**
-	 * We will create the file and get the collector object
-	 */
+
+
 	@Override
 	public void open(Map conf, TopologyContext context,
 			SpoutOutputCollector collector) {
@@ -67,9 +63,7 @@ public class WordGenerator extends BaseRichSpout {
 		this.collector = collector;
 	}
 
-	/**
-	 * Declare the output field "word"
-	 */
+	
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
 		declarer.declare(new Fields("line"));
