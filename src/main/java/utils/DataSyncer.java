@@ -68,7 +68,7 @@ public class DataSyncer implements Runnable {
 			jedis.select(3);
 			
 			// mysql connection
-			ConnectDatabase cd=new ConnectDatabase();
+			ConnectDB cd=new ConnectDB();
 			Connection conn = cd.ConnectMysql();
 			
 			try{

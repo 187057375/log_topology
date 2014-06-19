@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class ConnectDatabase {
+public class ConnectDB {
 	String user = "root";
 	String password = "root";
 	String url = "jdbc:mysql://localhost:3306/liumeng";

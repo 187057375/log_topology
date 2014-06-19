@@ -4,23 +4,15 @@ package topo;
 import spouts.RedisSpout;
 
 
-import spouts.TestWordGenerator;
-import utils.ConnectDatabase;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.generated.AlreadyAliveException;
 import backtype.storm.generated.InvalidTopologyException;
-import backtype.storm.spout.SpoutOutputCollector;
-import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 import bolts.PvCounter;
 import bolts.LogNormalizer;
-
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 import redis.clients.jedis.Jedis;
 
