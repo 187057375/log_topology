@@ -42,13 +42,13 @@ public class ConnectDatabase {
 	
     public void CutConnection(Connection conn) throws SQLException{
         try{
-           if(rs!=null);
-           if(conn!=null);
+        	if(rs!=null);
+        	if(conn!=null);
         }catch(Exception e){
-        e.printStackTrace();
+	        e.printStackTrace();
         }finally{
-       rs.close();
-       conn.close();
+        	rs.close();
+        	conn.close();
         }
     }
 

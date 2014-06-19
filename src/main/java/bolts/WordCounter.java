@@ -32,10 +32,6 @@ public class WordCounter extends BaseBasicBolt {
 	private int db;
 
 
-	/**
-	 * At the end of the spout (when the cluster is shutdown
-	 * we will show the word counters
-	 */
 	@Override
 	public void cleanup() {
 		/*
