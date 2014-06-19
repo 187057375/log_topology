@@ -17,7 +17,7 @@ import backtype.storm.topology.base.BaseBasicBolt;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.utils.Utils;
 
-public class WordCounter extends BaseBasicBolt {
+public class PvCounter extends BaseBasicBolt {
 
 	private DataSyncer syncer;
 	private long interval;

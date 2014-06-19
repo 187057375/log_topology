@@ -11,7 +11,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-public class WordGenerator extends BaseRichSpout {
+public class TestWordGenerator extends BaseRichSpout {
 	private SpoutOutputCollector collector;
 	//private int sentenceSize = 140;
 	private int sentenceSize = 1;

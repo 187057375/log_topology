@@ -89,7 +89,7 @@ public class DataSyncer implements Runnable {
 		
 		        try {
 		            PreparedStatement ps = conn.prepareStatement(insql);
-		            int result=ps.executeUpdate();//返回行数或者0
+		            int result=ps.executeUpdate();//line num or 0
 	//	            if(result>0)
 	//	                return true;
 		        } catch (SQLException ex) {

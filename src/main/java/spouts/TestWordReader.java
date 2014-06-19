@@ -14,7 +14,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
 
-public class WordReader extends BaseRichSpout {
+public class TestWordReader extends BaseRichSpout {
 
 	private SpoutOutputCollector collector;
 	private FileReader fileReader;

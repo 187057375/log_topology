@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class pvLogParser {
+public class PvLogParser {
 	
 //	private static final Pattern LINE_PATTERN = Pattern.compile(
 //		  "(\\S+:)?(\\S+? \\S+?) \\S+? DEBUG \\S+? - DEMANDE_ID=(\\d+?) - listener (\\S+?) : (\\S+?)");

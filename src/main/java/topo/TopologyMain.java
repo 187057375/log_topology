@@ -4,7 +4,7 @@ package topo;
 import spouts.RedisSpout;
 
 
-import spouts.WordGenerator;
+import spouts.TestWordGenerator;
 import utils.ConnectDatabase;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
@@ -15,8 +15,8 @@ import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
-import bolts.WordCounter;
-import bolts.WordNormalizer;
+import bolts.PvCounter;
+import bolts.LogNormalizer;
 
 import java.sql.*;
 import java.util.HashMap;
@@ -66,10 +66,10 @@ public class TopologyMain {
 		//builder.setSpout("generator",new WordGenerator(),1);
 		builder.setSpout("generator",rs,1);
 		
-		builder.setBolt("normalizer", new WordNormalizer(),1)
+		builder.setBolt("normalizer", new LogNormalizer(),1)
 			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new WordCounter(),1)
+		builder.setBolt("counter", new PvCounter(),1)
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run

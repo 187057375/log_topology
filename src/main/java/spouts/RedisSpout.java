@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import logparser.pvLogParser;
+import logparser.PvLogParser;
 
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
@@ -58,7 +58,7 @@ public class RedisSpout extends BaseRichSpout{
 //	        NavigationEntry entry = new NavigationEntry(user, type, map);
 	        String query = "";
 	        try {
-				Map<String,String> map = pvLogParser.parse(message);
+				Map<String,String> map = PvLogParser.parse(message);
 				query = map.get("query"); 
 			} catch (ParseException e) {
 				e.printStackTrace();

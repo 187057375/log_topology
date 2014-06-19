@@ -7,7 +7,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 
-public class WordNormalizer extends BaseBasicBolt {
+public class LogNormalizer extends BaseBasicBolt {
 
 	public void cleanup() {}
 
