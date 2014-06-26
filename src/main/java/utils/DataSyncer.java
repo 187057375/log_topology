@@ -85,16 +85,16 @@ public class DataSyncer implements Runnable {
 					e.printStackTrace();
 				}
 				
-				String insql="insert into test_data(id,pv) values('1',100)";
-		
-		        try {
-		            PreparedStatement ps = conn.prepareStatement(insql);
-		            int result=ps.executeUpdate();//line num or 0
-	//	            if(result>0)
-	//	                return true;
-		        } catch (SQLException ex) {
-		        	ex.printStackTrace();
-		        }
+//				String insql="insert into test_data(id,pv) values('1',100)";
+//		
+//		        try {
+//		            PreparedStatement ps = conn.prepareStatement(insql);
+//		            int result=ps.executeUpdate();//line num or 0
+//	//	            if(result>0)
+//	//	                return true;
+//		        } catch (SQLException ex) {
+//		        	ex.printStackTrace();
+//		        }
 	
 			}
 

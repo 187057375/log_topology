@@ -1,9 +1,10 @@
 package topo;
 
 
+import java.io.IOException;
+import java.util.Properties;
+
 import spouts.RedisSpout;
-
-
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -13,7 +14,6 @@ import backtype.storm.topology.TopologyBuilder;
 import backtype.storm.tuple.Fields;
 import bolts.PvCounter;
 import bolts.LogNormalizer;
-
 import redis.clients.jedis.Jedis;
 
 public class TopologyMain {
@@ -30,7 +30,17 @@ public class TopologyMain {
 	public int port;
 
 	public static void main(String[] args) throws InterruptedException, AlreadyAliveException, InvalidTopologyException {
-        
+        //
+		Properties props = new Properties();
+		try {
+			props.load(TopologyMain.class.getResourceAsStream("/topo.properties"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		props.getProperty("a", "d");
+		
+		
         //Configuration
 		Config conf = new Config();
 		//conf.setMaxTaskParallelism(3);

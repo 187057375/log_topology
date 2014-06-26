@@ -18,9 +18,6 @@ public class ConnectDB {
 	Connection conn = null;
 	Statement stmt = null;
 	ResultSet rs = null;
-    String insql;
-    String upsql;
-    String delsql;
 	
 	
 	public Connection ConnectMysql(){

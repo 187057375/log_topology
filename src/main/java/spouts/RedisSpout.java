@@ -10,6 +10,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
 import redis.clients.jedis.Jedis;
+import utils.MyString;
 import backtype.storm.spout.SpoutOutputCollector;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
@@ -56,14 +57,34 @@ public class RedisSpout extends BaseRichSpout{
 //	        HashMap<String, String> map = new HashMap<String, String>();
 //	        map.put("product", product);
 //	        NavigationEntry entry = new NavigationEntry(user, type, map);
-	        String query = "";
+	        String line = "";
 	        try {
 				Map<String,String> map = PvLogParser.parse(message);
-				query = map.get("query"); 
+				
+				/*
+		    	map.put("logTime", logTime);		
+		    	map.put("fm", fm);
+		    	map.put("kdt_id", kdt_id);
+		    	map.put("cookie",sessionId);
+				map.put("displayType",displayType);
+				map.put("displayId",displayId);
+				map.put("sourceType",sourceType);
+				map.put("sourceId",sourceId);
+				*/
+				
+				String[] strArr = {map.get("logTime"),
+						map.get("fm"),map.get("kdt_id"),
+						map.get("cookie"),map.get("displayType"),
+						map.get("displayId"),map.get("sourceType"),
+						map.get("sourceId")};
+				MyString ms = new MyString();
+				line = ms.combine(strArr, "\t");
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			collector.emit(new Values(query));
+	        if(line != ""){
+	        	collector.emit(new Values(line));
+	        }
 		}
 	}
 
