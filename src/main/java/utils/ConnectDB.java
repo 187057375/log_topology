@@ -13,7 +13,7 @@ public class ConnectDB {
 	String url = "jdbc:mysql://localhost:3306/liumeng";
 	String driver = "com.mysql.jdbc.Driver";
 	//String driver = "org.gjt.mm.mysql.Driver";
-	String tableName = "kdt_pageid";
+	//String tableName = "kdt_pageid";
 	String sqlstr;
 	Connection conn = null;
 	Statement stmt = null;
@@ -28,7 +28,7 @@ public class ConnectDB {
 			if (!conn.isClosed()) {
 				System.out.println("Succeeded connecting to the Database!");
 			} else {
-				System.out.println("Falled connecting to the Database!");
+				System.out.println("Failed connecting to the Database!");
 			}
 		}catch(Exception ex){
 			ex.printStackTrace();

@@ -27,7 +27,7 @@ public class PvLogParser {
 			String spm = "none";
 			String fm = "none";
 			String displayType = "none";
-			String displayId = "none";
+			String displayId = "0";
 			String refererType = "none";
 			String refererId = "none";
 			String sourceType = "none";
@@ -67,8 +67,8 @@ public class PvLogParser {
 					logTime = queryDict.get("time");
 					if(PHP_TIME.matcher(logTime).matches()){
 					 	//log_time = log_time[:-3];
-						Integer logTimeInt = Integer.parseInt(logTime);
-					 	logTime = new java.text.SimpleDateFormat("dd/MM/yyyy-HH:mm:ss").format(new java.util.Date(logTimeInt));
+						Long logTimeInt = Long.parseLong(logTime);
+					 	logTime = new java.text.SimpleDateFormat("yyyy/MM/dd-HH:mm:ss").format(new java.util.Date(logTimeInt));
 					}
 				}
 				
@@ -83,7 +83,7 @@ public class PvLogParser {
 				
 				
 				String[] spmArr = spm.split("_");
-				String displaySpm = spmArr[-1].trim();
+				String displaySpm = spmArr[spmArr.length-1].trim();
 				Matcher dm = SPM_PAT.matcher(displaySpm);
 				if(dm.matches()){
 					displayType = dm.group(1);
@@ -94,13 +94,13 @@ public class PvLogParser {
 					
 					String sourceSpm = spmArr[0].trim();
 					Matcher sm = SPM_PAT.matcher(sourceSpm);
-					if(dm.matches()){
+					if(sm.matches()){
 						sourceType = sm.group(1);
 						sourceId = sm.group(2);
 						sourceTn = sm.group(3);
 					}
 					
-					String refererSpm = spmArr[0].trim();
+					String refererSpm = spmArr[spmArr.length-2].trim();
 					Matcher rm = SPM_PAT.matcher(refererSpm);
 					if(rm.matches()){
 						refererType = rm.group(1);
@@ -115,7 +115,7 @@ public class PvLogParser {
 				//fm
 				
 				if(queryDict.containsKey("fm")){
-					spm = queryDict.get("fm");
+					fm = queryDict.get("fm");
 				}
 		    	
 				
@@ -140,7 +140,7 @@ public class PvLogParser {
 				if(cookieDict.containsKey("_kdt_id_")){
 					kdt_id = cookieDict.get("_kdt_id_");
 				}
-				if(KDT_PAT.matcher(kdt_id).matches()){
+				if(!KDT_PAT.matcher(kdt_id).matches()){
 					kdt_id = "0";
 				}
 				
@@ -162,28 +162,28 @@ public class PvLogParser {
 					isFans = cookieDict.get("fans_id");
 				}
 				
-		    	
-		    	map.put("logTime", logTime);		
-		    	map.put("fm", fm);
-		    	map.put("kdt_id", kdt_id);
-		    	map.put("cookie",sessionId);
-				map.put("displayType",displayType);
-				map.put("displayId",displayId);
-				map.put("sourceType",sourceType);
-				map.put("sourceId",sourceId);
-				
-				return map;
 						
 		    }
 
-	    	
-	    	
-	        return null;
-	        
-	        
+	    	map.put("logTime", logTime);		
+	    	map.put("fm", fm);
+	    	map.put("kdt_id", kdt_id);
+	    	map.put("cookie",sessionId);
+			map.put("displayType",displayType);
+			map.put("displayId",displayId);
+			map.put("sourceType",sourceType);
+			map.put("sourceId",sourceId);
+			
+			return map;
 	        
 		}
-
+	
+	public static Map<String,String> parseInput(String line) throws ParseException{
+		
+		return null;
+		
+	
+	}
 }
 
 

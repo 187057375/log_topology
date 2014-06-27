@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import redis.clients.jedis.Jedis;
-
-
 import utils.DataSyncer;
 import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.BasicOutputCollector;
@@ -61,6 +59,8 @@ public class PvCounter extends BaseBasicBolt {
 	private void reconnect() {
 		jedis = new Jedis(host, port);
 		jedis.select(db);
+		//System.out.println("redis connected");
+		//jedis.set("redis connected","1");
 	}
 	
 	/**
@@ -101,16 +101,87 @@ public class PvCounter extends BaseBasicBolt {
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
 		String str = input.getString(0);
+		String line = str.trim();
+		String[] lineArr = (String[]) line.split("\t");
+		Map <String,String> map = new HashMap<String,String>();
+		Boolean flag = true;
+		if(lineArr.length == 8){
+	    	map.put("logTime", lineArr[0]);		
+	    	map.put("fm", lineArr[1]);
+	    	map.put("kdt_id", lineArr[2]);
+	    	map.put("cookie",lineArr[3]);
+			map.put("displayType",lineArr[4]);
+			map.put("displayId", lineArr[5]);
+			map.put("sourceType", lineArr[6]);
+			map.put("sourceId", lineArr[7]);
+		}else{
+			flag = false;
+		}
 		
+		
+		
+		//Compute 
+		//if(flag && map.get("fm") == "display" && map.get("displayType") == "g"){
+		if(flag == true && map.get("fm").equals("display") == true 
+				&& map.get("displayType").equals("SI") == false){
+			
+			//total pv
+			if(!jedis.exists("total_pv")){
+				jedis.set("total_pv","1");
+			}
+			Integer totalPv = Integer.parseInt(jedis.get("total_pv"));
+			totalPv += 1;
+			jedis.set("total_pv",totalPv.toString());
+			
+			//total uv 
+			String cookie = map.get("cookie");
+			if(!jedis.exists("all_users")){
+				jedis.sadd("all_users", cookie); 
+			}
+			jedis.sadd("all_users", cookie);
+			Long totalUv = jedis.scard("all_users");			
+//			if(!jedis.exists(uvKey)){
+//				jedis.set(uvKey,"1");
+//			}
+			jedis.set("total_uv",totalUv.toString());
+			
+			
+			
+			//page id pv
+			String pvKey = map.get("displayType") + "_" + map.get("displayId") + "_pv";
+			if(!jedis.exists(pvKey)){
+				jedis.set(pvKey,"1");
+			}
+			Integer pv = Integer.parseInt(jedis.get(pvKey));
+			pv += 1;
+			jedis.set(pvKey,pv.toString());
+			
+			//page id uv
+			String usersKey = map.get("displayType") + "_" + map.get("displayId") + "_users";
+			//String cookie = map.get("cookie");
+			if(!jedis.exists(usersKey)){
+				jedis.sadd(usersKey, cookie); 
+			}
+			jedis.sadd(usersKey, cookie);
+			Long uv = jedis.scard(usersKey);			
+			String uvKey = map.get("displayType") + "_" + map.get("displayId") + "_uv";
+//			if(!jedis.exists(uvKey)){
+//				jedis.set(uvKey,"1");
+//			}
+			jedis.set(uvKey,uv.toString());
+
+		}
+	
+		if(flag == true){
 			try {
-				out.write(str + "\n");
+				out.write(map.get("displayId") + "\n");
 				out.flush();
 	        } catch (IOException e) {
 	        	e.printStackTrace();
 	        }
 
 		}
-		
+	}
 	
 }
 
