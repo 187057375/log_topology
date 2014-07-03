@@ -119,15 +119,25 @@ public class DataSyncer implements Runnable {
 			    //System.out.println("keys len : " + keysLen.toString());
 			    
 				Iterator t1=keys.iterator() ;
-				String pageType = "n";  
-				Long pageId = (long) 0; 
-				String numType = "n"; 
-				Integer pv = 0; 
-				Integer uv = 0; 
-				Integer store_pv = 0; 
-				Integer store_uv = 0; 
+//				String pageType = "n";  
+//				Long pageId = (long) 0; 
+//				String numType = "n"; 
+//				Integer pv = 0; 
+//				Integer uv = 0; 
+//				Integer store_pv = 0; 
+//				Integer store_uv = 0; 
 				
 				while(t1.hasNext()){
+					
+					
+					String pageType = "n";  
+					Long pageId = (long) 0; 
+					String numType = "n"; 
+					Integer pv = 0; 
+					Integer uv = 0; 
+					Integer store_pv = 0; 
+					Integer store_uv = 0; 
+					
 					
 					Object obj1 = t1.next();
 					String sKey = obj1.toString(); 
@@ -217,13 +227,23 @@ public class DataSyncer implements Runnable {
 						}
 						
 						try {
-							String inSql="REPLACE INTO "+ tableName +" (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
+//							String inSql="REPLACE INTO "+ tableName +" (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
+//							PreparedStatement ps = conn.prepareStatement(inSql);
+//							ps.setLong(1,pageId);
+//							ps.setLong(2,pv);
+//							ps.setLong(3,uv);
+//							ps.setLong(4,store_pv);
+//							ps.setLong(5,store_uv);
+							
+							String inSql="REPLACE INTO "+ tableName + " (id," + " " + " VALUES(?); ";
 							PreparedStatement ps = conn.prepareStatement(inSql);
 							ps.setLong(1,pageId);
 							ps.setLong(2,pv);
 							ps.setLong(3,uv);
 							ps.setLong(4,store_pv);
 							ps.setLong(5,store_uv);
+							
+							
 							
 //							String inSql="REPLACE INTO goods_pv (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?);";
 //							PreparedStatement ps = conn.prepareStatement(inSql);

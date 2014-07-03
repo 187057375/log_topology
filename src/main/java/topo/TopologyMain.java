@@ -20,7 +20,7 @@ public class TopologyMain {
 	
 	public final static String REDIS_HOST = "localhost";
 	public final static int REDIS_PORT = 6379;
-	public final static int MYSQL_INTERVAL = 10000;
+	public final static int MYSQL_INTERVAL = 60000;
 	public final static int STAT_DB = 3;
 	
 	
@@ -76,11 +76,11 @@ public class TopologyMain {
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run
-		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("wordcount", conf, builder.createTopology());
-		Thread.sleep(60000000);
-		cluster.shutdown();
-		//StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
+//		LocalCluster cluster = new LocalCluster();
+//		cluster.submitTopology("wordcount", conf, builder.createTopology());
+//		Thread.sleep(60000000);
+//		cluster.shutdown();
+		StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
 	
 	}
 }
