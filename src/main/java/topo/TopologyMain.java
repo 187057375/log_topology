@@ -76,11 +76,11 @@ public class TopologyMain {
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run
-		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("wordcount", conf, builder.createTopology());
-		Thread.sleep(60000000);
-		cluster.shutdown();
-		//StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
+//		LocalCluster cluster = new LocalCluster();
+//		cluster.submitTopology("wordcount", conf, builder.createTopology());
+//		Thread.sleep(60000000);
+//		cluster.shutdown();
+		StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
 	
 	}
 }
