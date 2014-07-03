@@ -80,13 +80,13 @@ public class PvCounter extends BaseBasicBolt {
 		reconnect();
 
         //out to file
-		try {
-			this.out = new BufferedWriter(new FileWriter("/Users/work/work/log_topology/out.txt"),1);
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			System.out.println("Error open file out.txt !"); 
-			e1.printStackTrace();
-		}
+//		try {
+//			this.out = new BufferedWriter(new FileWriter("/Users/work/work/log_topology/out.txt"),1);
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			System.out.println("Error open file out.txt !"); 
+//			e1.printStackTrace();
+//		}
 		
 		
 		// redis to mysql
@@ -127,11 +127,12 @@ public class PvCounter extends BaseBasicBolt {
 			
 			//total pv
 			if(!jedis.exists("total_pv")){
-				jedis.set("total_pv","1");
+				jedis.hset("total_pv","pv","0");
+				jedis.hset("total_pv","uv","0");
 			}
-			Integer totalPv = Integer.parseInt(jedis.get("total_pv"));
+			Integer totalPv = Integer.parseInt(jedis.hget("total_pv","pv"));
 			totalPv += 1;
-			jedis.set("total_pv",totalPv.toString());
+			jedis.hset("total_pv","pv",totalPv.toString());
 			
 			//total uv 
 			String cookie = map.get("cookie");
@@ -143,18 +144,19 @@ public class PvCounter extends BaseBasicBolt {
 //			if(!jedis.exists(uvKey)){
 //				jedis.set(uvKey,"1");
 //			}
-			jedis.set("total_uv",totalUv.toString());
+			jedis.hset("total_pv","uv",totalUv.toString());
 			
 			
 			
 			//page id pv
-			String pvKey = map.get("displayType") + "_" + map.get("displayId") + "_pv";
+			String pvKey = map.get("displayType") + "_" + map.get("displayId");
 			if(!jedis.exists(pvKey)){
-				jedis.set(pvKey,"1");
+				jedis.hset(pvKey,"pv","0");
+				jedis.hset(pvKey,"uv","0");
 			}
-			Integer pv = Integer.parseInt(jedis.get(pvKey));
+			Integer pv = Integer.parseInt(jedis.hget(pvKey,"pv"));
 			pv += 1;
-			jedis.set(pvKey,pv.toString());
+			jedis.hset(pvKey,"pv",pv.toString());
 			
 			//page id uv
 			String usersKey = map.get("displayType") + "_" + map.get("displayId") + "_users";
@@ -164,23 +166,23 @@ public class PvCounter extends BaseBasicBolt {
 			}
 			jedis.sadd(usersKey, cookie);
 			Long uv = jedis.scard(usersKey);			
-			String uvKey = map.get("displayType") + "_" + map.get("displayId") + "_uv";
+			String uvKey = map.get("displayType") + "_" + map.get("displayId");
 //			if(!jedis.exists(uvKey)){
 //				jedis.set(uvKey,"1");
 //			}
-			jedis.set(uvKey,uv.toString());
+			jedis.hset(uvKey,"uv",uv.toString());
 
 		}
 	
-		if(flag == true){
-			try {
-				out.write(map.get("displayId") + "\n");
-				out.flush();
-	        } catch (IOException e) {
-	        	e.printStackTrace();
-	        }
-
-		}
+//		if(flag == true){
+//			try {
+//				out.write(map.get("displayId") + "\n");
+//				out.flush();
+//	        } catch (IOException e) {
+//	        	e.printStackTrace();
+//	        }
+//
+//		}
 	}
 	
 }

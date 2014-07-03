@@ -149,10 +149,10 @@ public class DataSyncer implements Runnable {
 					String keyType = jedis.type(sKey);
 					System.out.println(sKey + "'s type is " + keyType);
 					//values 
-					if(keyType.equals("string")){
+					if(keyType.equals("hash")){
 						String[] keyArr = sKey.split("_");
-						Integer sValue = Integer.parseInt(jedis.get(sKey));
-						if(keyArr.length == 3){
+						//Integer sValue = Integer.parseInt(jedis.get(sKey));
+						if(keyArr.length == 2){
 							pageType = keyArr[0];
 							//pageId = Long.parseLong(keyArr[1]); 
 //							if(keyArr[1].length() > 10){
@@ -163,8 +163,13 @@ public class DataSyncer implements Runnable {
 								continue;
 							}
 							pageId = Long.parseLong(keyArr[1]); 
-							numType = keyArr[2];
 							
+							pv = Integer.parseInt(jedis.hget(sKey,"pv"));
+							uv = Integer.parseInt(jedis.hget(sKey,"uv"));
+							
+							
+							//numType = keyArr[2];
+							/*
 							Map<String,Integer> valueMap = new HashMap<String, Integer>();
 							valueMap.put("pv", 1);
 							valueMap.put("uv", 2);
@@ -191,7 +196,8 @@ public class DataSyncer implements Runnable {
 						
 							
 						}
-						
+						*/
+							
 						//
 						String tableName ="";
 //						Map<String,Integer> pageMap=new HashMap<String, Integer>();
@@ -227,15 +233,7 @@ public class DataSyncer implements Runnable {
 						}
 						
 						try {
-//							String inSql="REPLACE INTO "+ tableName +" (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
-//							PreparedStatement ps = conn.prepareStatement(inSql);
-//							ps.setLong(1,pageId);
-//							ps.setLong(2,pv);
-//							ps.setLong(3,uv);
-//							ps.setLong(4,store_pv);
-//							ps.setLong(5,store_uv);
-							
-							String inSql="REPLACE INTO "+ tableName + " (id," + " " + " VALUES(?); ";
+							String inSql="REPLACE INTO "+ tableName +" (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
 							PreparedStatement ps = conn.prepareStatement(inSql);
 							ps.setLong(1,pageId);
 							ps.setLong(2,pv);
@@ -243,6 +241,7 @@ public class DataSyncer implements Runnable {
 							ps.setLong(4,store_pv);
 							ps.setLong(5,store_uv);
 							
+				
 							
 							
 //							String inSql="REPLACE INTO goods_pv (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?);";
@@ -266,8 +265,9 @@ public class DataSyncer implements Runnable {
 				
 				
 				
-			}
+				}
 
+			}
     }
 
     public void stop() {
