@@ -18,9 +18,7 @@ import redis.clients.jedis.Jedis;
 
 public class DataSyncer implements Runnable {
 
-	
 	private static final Pattern PAGE_ID = Pattern.compile("^\\d{1,10}$");
-	
 	
     private final long delay;
     
@@ -92,18 +90,18 @@ public class DataSyncer implements Runnable {
 				//test
 				//
 				System.out.println("fuck mysql");
-				testId += 1;
-				String testSql="REPLACE INTO goods_pv(id,pv,uv,store_pv,store_uv) VALUES(?,2,3,4,5);";
-				try {
-					PreparedStatement testps = conn.prepareStatement(testSql);
-					testps.setLong(1,testId);
-					testps.execute();
-//					int result=ps.execute();//line num or 0
-////							if(result>0)
-////								return true;
-				} catch (SQLException ex) {
-					ex.printStackTrace();
-				}
+//				testId += 1;
+//				String testSql="REPLACE INTO goods_pv(id,pv,uv,store_pv,store_uv) VALUES(?,2,3,4,5);";
+//				try {
+//					PreparedStatement testps = conn.prepareStatement(testSql);
+//					testps.setLong(1,testId);
+//					testps.execute();
+////					int result=ps.execute();//line num or 0
+//////							if(result>0)
+//////								return true;
+//				} catch (SQLException ex) {
+//					ex.printStackTrace();
+//				}
 				
 				
 				try {
@@ -205,40 +203,42 @@ public class DataSyncer implements Runnable {
 						if(pageType.equals("g")){
 							tableName = "goods";
 						}else if(pageType.equals("f")){
-							tableName = "feature";
+							tableName = "features";
 						}else{
 							tableName = "none";
 						}
 						
 						if(tableName.equals("goods") == true){
 							tableName = tableName + "_pv";
-							//insert to mysql
-							//String inSql="REPLACE INTO goods_pv (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
-							try {
-//								String inSql="REPLACE INTO ? (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
-//								PreparedStatement ps = conn.prepareStatement(inSql);
-//								ps.setString(1,tableName);
-//								ps.setLong(2,pageId);
-//								ps.setLong(3,pv);
-//								ps.setLong(4,uv);
-//								ps.setLong(5,store_pv);
-//								ps.setLong(6,store_uv);
-								
-								String inSql="REPLACE INTO goods_pv (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?);";
-								PreparedStatement ps = conn.prepareStatement(inSql);
-								ps.setLong(1,pageId);
-								ps.setLong(2,pv);
-								ps.setLong(3,uv);
-								ps.setLong(4,store_pv);
-								ps.setLong(5,store_uv);
-								
-								ps.execute();
-//								int result=ps.executeUpdate();//line num or 0
-	//							if(result>0)
-	//								return true;
-							} catch (SQLException ex) {
-								ex.printStackTrace();
-							}
+						}else if(tableName.equals("features") == true){
+							tableName = tableName + "_pv";
+						}else{
+							continue;
+						}
+						
+						try {
+							String inSql="REPLACE INTO "+ tableName +" (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?); ";
+							PreparedStatement ps = conn.prepareStatement(inSql);
+							ps.setLong(1,pageId);
+							ps.setLong(2,pv);
+							ps.setLong(3,uv);
+							ps.setLong(4,store_pv);
+							ps.setLong(5,store_uv);
+							
+//							String inSql="REPLACE INTO goods_pv (id,pv,uv,store_pv,store_uv) VALUES(?,?,?,?,?);";
+//							PreparedStatement ps = conn.prepareStatement(inSql);
+//							ps.setLong(1,pageId);
+//							ps.setLong(2,pv);
+//							ps.setLong(3,uv);
+//							ps.setLong(4,store_pv);
+//							ps.setLong(5,store_uv);
+							
+							ps.execute();
+//							int result=ps.executeUpd ate();//line num or 0
+//							if(result>0)
+//								return true;
+						} catch (SQLException ex) {
+							ex.printStackTrace();
 						}
 					}
 

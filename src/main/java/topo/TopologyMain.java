@@ -20,11 +20,10 @@ public class TopologyMain {
 	
 	public final static String REDIS_HOST = "localhost";
 	public final static int REDIS_PORT = 6379;
-	public final static int MYSQL_INTERVAL = 3;
+	public final static int MYSQL_INTERVAL = 10000;
 	public final static int STAT_DB = 3;
 	
 	
-
 	public static boolean testing = true;
 	
 	public Jedis jedis;
