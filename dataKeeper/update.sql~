@@ -47,7 +47,7 @@ union all
 select *
 from goods_pv
 ) b
-group by id;
+group by goods_id;
 
 
 DELETE FROM goods_pv_total_tmp WHERE 1;
@@ -105,13 +105,13 @@ union all
 select *
 from features_pv
 ) b
-group by id;
+group by features_id;
 
 
 DELETE FROM features_pv_total_tmp WHERE 1;
 
 
-INSERT INTO features_pv_total_tmp (id, pv, uv, store_pv, store_uv)
+INSERT INTO features_pv_total_tmp (features_id, pv, uv, store_pv, store_uv)
 select * from features_pv_total;
 
 

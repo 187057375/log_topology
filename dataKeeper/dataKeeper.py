@@ -24,7 +24,7 @@ if __name__ == "__main__":
 		+ " -D" + MYSQL_DB \
 		+ " <"  + SQL_FILE
 	print >> sys.stderr,cmd
-	#os.system(cmd)
+	os.system(cmd)
 
 	r = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, db=REDIS_DB)
 	r.flushdb()
