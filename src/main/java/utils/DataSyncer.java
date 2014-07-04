@@ -114,9 +114,13 @@ public class DataSyncer implements Runnable {
 				// keys * & values
 			    Set keys = jedis.keys("*");
 			    
+			    //keys 为空
+			    
+			      
+			    
 			    //test
-			    //Integer keysLen = keys.size() ;
-			    //System.out.println("keys len : " + keysLen.toString());
+//			    Integer keysLen = keys.size() ;
+//			    System.out.println("keys len : " + keysLen.toString());
 			    
 				Iterator t1=keys.iterator() ;
 //				String pageType = "n";  
@@ -132,7 +136,7 @@ public class DataSyncer implements Runnable {
 					
 					String pageType = "n";  
 					Long pageId = (long) 0; 
-					String numType = "n"; 
+					//String numType = "n"; 
 					Integer pv = 0; 
 					Integer uv = 0; 
 					Integer store_pv = 0; 
@@ -166,6 +170,8 @@ public class DataSyncer implements Runnable {
 							
 							pv = Integer.parseInt(jedis.hget(sKey,"pv"));
 							uv = Integer.parseInt(jedis.hget(sKey,"uv"));
+							store_pv = Integer.parseInt(jedis.hget(sKey,"store_pv"));
+							store_uv = Integer.parseInt(jedis.hget(sKey,"store_uv"));
 							
 							
 							//numType = keyArr[2];

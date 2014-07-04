@@ -80,7 +80,7 @@ public class TopologyMain {
 //		cluster.submitTopology("wordcount", conf, builder.createTopology());
 //		Thread.sleep(60000000);
 //		cluster.shutdown();
-		StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
+		StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
 	
 	}
 }

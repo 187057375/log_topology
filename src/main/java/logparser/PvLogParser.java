@@ -173,6 +173,9 @@ public class PvLogParser {
 			map.put("displayId",displayId);
 			map.put("sourceType",sourceType);
 			map.put("sourceId",sourceId);
+			map.put("refererType",refererType);
+			map.put("refererId",refererId);
+
 			
 			return map;
 	        

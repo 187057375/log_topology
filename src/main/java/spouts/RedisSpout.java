@@ -76,7 +76,8 @@ public class RedisSpout extends BaseRichSpout{
 						map.get("fm"),map.get("kdt_id"),
 						map.get("cookie"),map.get("displayType"),
 						map.get("displayId"),map.get("sourceType"),
-						map.get("sourceId")};
+						map.get("sourceId"),map.get("refererType"),
+						map.get("refererId")};
 				MyString ms = new MyString();
 				line = ms.combine(strArr, "\t");
 			} catch (ParseException e) {

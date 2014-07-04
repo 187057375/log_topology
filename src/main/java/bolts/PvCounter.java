@@ -105,7 +105,7 @@ public class PvCounter extends BaseBasicBolt {
 		String[] lineArr = (String[]) line.split("\t");
 		Map <String,String> map = new HashMap<String,String>();
 		Boolean flag = true;
-		if(lineArr.length == 8){
+		if(lineArr.length == 10){
 	    	map.put("logTime", lineArr[0]);		
 	    	map.put("fm", lineArr[1]);
 	    	map.put("kdt_id", lineArr[2]);
@@ -114,6 +114,8 @@ public class PvCounter extends BaseBasicBolt {
 			map.put("displayId", lineArr[5]);
 			map.put("sourceType", lineArr[6]);
 			map.put("sourceId", lineArr[7]);
+			map.put("refererType", lineArr[8]);
+			map.put("refererId", lineArr[9]);
 		}else{
 			flag = false;
 		}
@@ -123,7 +125,8 @@ public class PvCounter extends BaseBasicBolt {
 		//Compute 
 		//if(flag && map.get("fm") == "display" && map.get("displayType") == "g"){
 		if(flag == true && map.get("fm").equals("display") == true 
-				&& map.get("displayType").equals("SI") == false){
+				&& map.get("displayType").equals("SI") == false
+				&& map.get("displayType").equals("none") == false){
 			
 			//total pv
 			if(!jedis.exists("total_pv")){
@@ -153,6 +156,8 @@ public class PvCounter extends BaseBasicBolt {
 			if(!jedis.exists(pvKey)){
 				jedis.hset(pvKey,"pv","0");
 				jedis.hset(pvKey,"uv","0");
+				jedis.hset(pvKey,"store_pv","0");
+				jedis.hset(pvKey,"store_uv","0");
 			}
 			Integer pv = Integer.parseInt(jedis.hget(pvKey,"pv"));
 			pv += 1;
@@ -171,7 +176,36 @@ public class PvCounter extends BaseBasicBolt {
 //				jedis.set(uvKey,"1");
 //			}
 			jedis.hset(uvKey,"uv",uv.toString());
+			
+			
+			
+			if(map.get("displayType").equals("g") == true && 
+					map.get("refererType").equals("none") == false){
+				
+				//page id store_pv
+				String storePvKey = map.get("refererType") + "_" + map.get("refererId");
+				if(!jedis.exists(storePvKey)){
+					jedis.hset(storePvKey,"pv","0");
+					jedis.hset(storePvKey,"uv","0");
+					jedis.hset(storePvKey,"store_pv","0");
+					jedis.hset(storePvKey,"store_uv","0");
+				}
+				Integer storePv = Integer.parseInt(jedis.hget(storePvKey,"store_pv"));
+				storePv += 1;
+				jedis.hset(storePvKey,"store_pv",storePv.toString());
+				
+				//page id store_uv
+				String storeUsersKey = map.get("refererType") + "_" + map.get("refererId") + "_storeUsers";
+				//String cookie = map.get("cookie");
+				if(!jedis.exists(storeUsersKey)){
+					jedis.sadd(storeUsersKey, cookie); 
+				}
+				jedis.sadd(storeUsersKey, cookie);
+				Long storeUv = jedis.scard(storeUsersKey);			
+				String storeUvKey = map.get("refererType") + "_" + map.get("refererId");
+				jedis.hset(storeUvKey,"store_uv",storeUv.toString());
 
+			}
 		}
 	
 //		if(flag == true){
