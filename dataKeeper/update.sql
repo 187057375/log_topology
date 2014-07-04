@@ -6,7 +6,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_goods_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 create table if not exists goods_pv_total_tmp (
@@ -16,7 +16,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_goods_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 create table if not exists goods_pv_total (
@@ -26,7 +26,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_goods_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 DELETE FROM goods_pv_total WHERE 1;
@@ -64,7 +64,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_features_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 create table if not exists features_pv_total_tmp (
@@ -74,7 +74,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_features_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 create table if not exists features_pv_total (
@@ -84,7 +84,7 @@ uv int(11),
 store_pv int(11),
 store_uv int(11),
 UNIQUE KEY `UK_features_id` (`id`)
-)engine=innodb DEFAULT CHARSET=utf8mb4;
+)engine=innodb DEFAULT CHARSET=utf8;
 
 
 DELETE FROM features_pv_total WHERE 1;
