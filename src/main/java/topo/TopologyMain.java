@@ -19,6 +19,7 @@ import redis.clients.jedis.Jedis;
 public class TopologyMain {
 	
 	public final static String REDIS_HOST = "localhost";
+	public final static String ORI_REDIS_HOST = "10.6.9.149";
 	public final static int REDIS_PORT = 6379;
 	public final static int MYSQL_INTERVAL = 6000;
 	public final static int STAT_DB = 3;
@@ -49,6 +50,7 @@ public class TopologyMain {
 		conf.setDebug(testing);
 //		conf.setNumWorkers(10);
         conf.put("redis-host", REDIS_HOST);
+        conf.put("ori-redis-host", ORI_REDIS_HOST);
         conf.put("redis-port", REDIS_PORT);
         conf.put("interval", MYSQL_INTERVAL);
         conf.put("stat-db", STAT_DB);
