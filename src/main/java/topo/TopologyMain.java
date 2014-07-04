@@ -74,7 +74,7 @@ public class TopologyMain {
 		builder.setBolt("normalizer", new LogNormalizer(),1)
 			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),1)
+		builder.setBolt("counter", new PvCounter(),12)
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run
@@ -82,7 +82,7 @@ public class TopologyMain {
 //		cluster.submitTopology("wordcount", conf, builder.createTopology());
 //		Thread.sleep(60000000);
 //		cluster.shutdown();
-		StormSubmitter.submitTopology("word_count", conf,builder.createTopology());
+		StormSubmitter.submitTopology("kdt_pv_log", conf,builder.createTopology());
 	
 	}
 }
