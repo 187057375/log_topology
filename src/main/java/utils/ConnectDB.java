@@ -11,6 +11,7 @@ public class ConnectDB {
 	String user = "root";
 	String password = "root";
 	String url = "jdbc:mysql://10.6.9.149:3306/liumeng";
+	//String url = "jdbc:mysql://localhost:3306/liumeng";
 	String driver = "com.mysql.jdbc.Driver";
 	//String driver = "org.gjt.mm.mysql.Driver";
 	//String tableName = "kdt_pageid";

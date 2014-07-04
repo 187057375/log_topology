@@ -100,26 +100,45 @@ public class PvCounter extends BaseBasicBolt {
 
 	@Override
 	public void execute(Tuple input, BasicOutputCollector collector) {
-		String str = input.getString(0);
-		String line = str.trim();
-		String[] lineArr = (String[]) line.split("\t");
+//		String str = input.getString(0);
+//		String line = str.trim();
+//		String[] lineArr = (String[]) line.split("\t");
+//		Map <String,String> map = new HashMap<String,String>();
+//		Boolean flag = true;
+//		if(lineArr.length == 10){
+//	    	map.put("logTime", lineArr[0]);		
+//	    	map.put("fm", lineArr[1]);
+//	    	map.put("kdt_id", lineArr[2]);
+//	    	map.put("cookie",lineArr[3]);
+//			map.put("displayType",lineArr[4]);
+//			map.put("displayId", lineArr[5]);
+//			map.put("sourceType", lineArr[6]);
+//			map.put("sourceId", lineArr[7]);
+//			map.put("refererType", lineArr[8]);
+//			map.put("refererId", lineArr[9]);
+//		}else{
+//			flag = false;
+//		}
+		
+		//String str = input.getValueByField();
 		Map <String,String> map = new HashMap<String,String>();
 		Boolean flag = true;
-		if(lineArr.length == 10){
-	    	map.put("logTime", lineArr[0]);		
-	    	map.put("fm", lineArr[1]);
-	    	map.put("kdt_id", lineArr[2]);
-	    	map.put("cookie",lineArr[3]);
-			map.put("displayType",lineArr[4]);
-			map.put("displayId", lineArr[5]);
-			map.put("sourceType", lineArr[6]);
-			map.put("sourceId", lineArr[7]);
-			map.put("refererType", lineArr[8]);
-			map.put("refererId", lineArr[9]);
-		}else{
-			flag = false;
-		}
 		
+		if(input.size() == 10){
+			    	map.put("logTime", (String) input.getValueByField("logTime"));		
+			    	map.put("fm", (String) input.getValueByField("fm"));
+			    	map.put("kdt_id", (String) input.getValueByField("kdt_id"));
+			    	map.put("cookie",(String) input.getValueByField("cookie"));
+					map.put("displayType",(String) input.getValueByField("displayType"));
+					map.put("displayId", (String) input.getValueByField("displayId"));
+					map.put("sourceType", (String) input.getValueByField("sourceType"));
+					map.put("sourceId", (String) input.getValueByField("sourceId"));
+					map.put("refererType", (String) input.getValueByField("refererType"));
+					map.put("refererId", (String) input.getValueByField("refererId"));
+		
+		}else{
+					flag = false;
+		}
 		
 		
 		//Compute 
@@ -128,26 +147,28 @@ public class PvCounter extends BaseBasicBolt {
 				&& map.get("displayType").equals("SI") == false
 				&& map.get("displayType").equals("none") == false){
 			
-			//total pv
-			if(!jedis.exists("total_pv")){
-				jedis.hset("total_pv","pv","0");
-				jedis.hset("total_pv","uv","0");
-			}
-			Integer totalPv = Integer.parseInt(jedis.hget("total_pv","pv"));
-			totalPv += 1;
-			jedis.hset("total_pv","pv",totalPv.toString());
-			
-			//total uv 
 			String cookie = map.get("cookie");
-			if(!jedis.exists("all_users")){
-				jedis.sadd("all_users", cookie); 
-			}
-			jedis.sadd("all_users", cookie);
-			Long totalUv = jedis.scard("all_users");			
-//			if(!jedis.exists(uvKey)){
-//				jedis.set(uvKey,"1");
+			
+			//total pv
+//			if(!jedis.exists("total_pv")){
+//				jedis.hset("total_pv","pv","0");
+//				jedis.hset("total_pv","uv","0");
 //			}
-			jedis.hset("total_pv","uv",totalUv.toString());
+//			Integer totalPv = Integer.parseInt(jedis.hget("total_pv","pv"));
+//			totalPv += 1;
+//			jedis.hset("total_pv","pv",totalPv.toString());
+//			
+//			//total uv 
+//			//String cookie = map.get("cookie");
+//			if(!jedis.exists("all_users")){
+//				jedis.sadd("all_users", cookie); 
+//			}
+//			jedis.sadd("all_users", cookie);
+//			Long totalUv = jedis.scard("all_users");			
+////			if(!jedis.exists(uvKey)){
+////				jedis.set(uvKey,"1");
+////			}
+//			jedis.hset("total_pv","uv",totalUv.toString());
 			
 			
 			

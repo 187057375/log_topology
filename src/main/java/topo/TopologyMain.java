@@ -69,20 +69,20 @@ public class TopologyMain {
 		RedisSpout rs = new RedisSpout();
 		
 		//builder.setSpout("generator",new WordGenerator(),1);
-		builder.setSpout("generator",rs,1);
+		builder.setSpout("rs",rs,3);
 		
-		builder.setBolt("normalizer", new LogNormalizer(),1)
-			.shuffleGrouping("generator");
+//		builder.setBolt("normalizer", new LogNormalizer(),1)
+//			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),1)
-			.fieldsGrouping("normalizer", new Fields("word"));
+		builder.setBolt("counter", new PvCounter(),12)
+			.fieldsGrouping("rs", new Fields("displayType","displayId"));
        
         //Topology run
-		LocalCluster cluster = new LocalCluster();
-		cluster.submitTopology("wordcount", conf, builder.createTopology());
-		Thread.sleep(60000000);
-		cluster.shutdown();
-		//StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
+//		LocalCluster cluster = new LocalCluster();
+//		cluster.submitTopology("kdt_pv_pageid", conf, builder.createTopology());
+//		Thread.sleep(60000000);
+//		cluster.shutdown();
+		StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
 	
 	}
 }

@@ -89,7 +89,7 @@ public class DataSyncer implements Runnable {
 			while(run){
 				//test
 				//
-				System.out.println("fuck mysql");
+				//System.out.println("fuck mysql");
 //				testId += 1;
 //				String testSql="REPLACE INTO goods_pv(id,pv,uv,store_pv,store_uv) VALUES(?,2,3,4,5);";
 //				try {
@@ -151,7 +151,7 @@ public class DataSyncer implements Runnable {
 					
 					//String keyType = jedis.type(sKey);
 					String keyType = jedis.type(sKey);
-					System.out.println(sKey + "'s type is " + keyType);
+					//System.out.println(sKey + "'s type is " + keyType);
 					//values 
 					if(keyType.equals("hash")){
 						String[] keyArr = sKey.split("_");

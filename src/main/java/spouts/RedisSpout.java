@@ -1,7 +1,10 @@
 package spouts;
 
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import logparser.PvLogParser;
@@ -33,6 +36,7 @@ public class RedisSpout extends BaseRichSpout{
 	public void open(Map stormConf, TopologyContext context,
 			SpoutOutputCollector collector) {
 		host = stormConf.get("ori-redis-host").toString();
+		//host = stormConf.get("redis-host").toString();
 		port = Integer.valueOf(stormConf.get("redis-port").toString());
 		this.collector = collector;
 		reconnect();
@@ -80,18 +84,33 @@ public class RedisSpout extends BaseRichSpout{
 						map.get("refererId")};
 				MyString ms = new MyString();
 				line = ms.combine(strArr, "\t");
+				
+				
+				collector.emit(new Values(map.get("logTime"),
+						map.get("fm"),map.get("kdt_id"),
+						map.get("cookie"),map.get("displayType"),
+						map.get("displayId"),map.get("sourceType"),
+						map.get("sourceId"),map.get("refererType"),
+						map.get("refererId")));			
+				
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-	        if(line != ""){
-	        	collector.emit(new Values(line));
-	        }
+//	        if(line != ""){
+//	        	collector.emit(new Values(line));
+//	        }
 		}
 	}
 
 	@Override
 	public void declareOutputFields(OutputFieldsDeclarer declarer) {
-		declarer.declare(new Fields("line"));
+		//List<String> fields = new ArrayList<String>();
+
+		List<String> fields = Arrays.asList(new String[] {"logTime",
+				"fm","kdt_id","cookie","displayType","displayId",
+				"sourceType","sourceId",
+				"refererType","refererId"});
+		declarer.declare(new Fields(fields));
 	}
 	
 	
