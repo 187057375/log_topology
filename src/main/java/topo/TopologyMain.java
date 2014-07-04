@@ -20,8 +20,9 @@ public class TopologyMain {
 	
 	public final static String REDIS_HOST = "localhost";
 	public final static int REDIS_PORT = 6379;
-	public final static int MYSQL_INTERVAL = 6000;
+	public final static int MYSQL_INTERVAL = 10000;
 	public final static int STAT_DB = 3;
+	public final static String ORI_REDIS_HOST = "10.6.9.149";
 	
 	
 	public static boolean testing = true;
@@ -52,6 +53,7 @@ public class TopologyMain {
         conf.put("redis-port", REDIS_PORT);
         conf.put("interval", MYSQL_INTERVAL);
         conf.put("stat-db", STAT_DB);
+        conf.put("ori-redis-host", ORI_REDIS_HOST);
         //conf.put("webserver", WEBSERVER);
         //conf.put("download-time", DOWNLOAD_TIME);
         
@@ -76,11 +78,11 @@ public class TopologyMain {
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run
-//		LocalCluster cluster = new LocalCluster();
-//		cluster.submitTopology("wordcount", conf, builder.createTopology());
-//		Thread.sleep(60000000);
-//		cluster.shutdown();
-		StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
+		LocalCluster cluster = new LocalCluster();
+		cluster.submitTopology("wordcount", conf, builder.createTopology());
+		Thread.sleep(60000000);
+		cluster.shutdown();
+		//StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
 	
 	}
 }

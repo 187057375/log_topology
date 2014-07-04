@@ -32,7 +32,7 @@ public class RedisSpout extends BaseRichSpout{
 	@Override
 	public void open(Map stormConf, TopologyContext context,
 			SpoutOutputCollector collector) {
-		host = stormConf.get("redis-host").toString();
+		host = stormConf.get("ori-redis-host").toString();
 		port = Integer.valueOf(stormConf.get("redis-port").toString());
 		this.collector = collector;
 		reconnect();
