@@ -74,15 +74,15 @@ public class TopologyMain {
 		builder.setBolt("normalizer", new LogNormalizer(),1)
 			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),12)
+		builder.setBolt("counter", new PvCounter(),1)
 			.fieldsGrouping("normalizer", new Fields("word"));
        
         //Topology run
-//		LocalCluster cluster = new LocalCluster();
-//		cluster.submitTopology("wordcount", conf, builder.createTopology());
-//		Thread.sleep(60000000);
-//		cluster.shutdown();
-		StormSubmitter.submitTopology("kdt_pv_log", conf,builder.createTopology());
+		LocalCluster cluster = new LocalCluster();
+		cluster.submitTopology("wordcount", conf, builder.createTopology());
+		Thread.sleep(60000000);
+		cluster.shutdown();
+		//StormSubmitter.submitTopology("kdt_pv_log", conf,builder.createTopology());
 	
 	}
 }
