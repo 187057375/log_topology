@@ -45,10 +45,10 @@ public class TopologyMain {
 		
         //Configuration
 		Config conf = new Config();
-		conf.setMaxTaskParallelism(20);
+		//conf.setMaxTaskParallelism(20);
 		//conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 3);
-		conf.setDebug(testing);
-		conf.setNumWorkers(20);
+		//conf.setDebug(testing);
+		//conf.setNumWorkers(20);
         conf.put("redis-host", REDIS_HOST);
         conf.put("redis-port", REDIS_PORT);
         conf.put("interval", MYSQL_INTERVAL);
@@ -78,11 +78,11 @@ public class TopologyMain {
 			.fieldsGrouping("rs", new Fields("displayType","displayId"));
        
         //Topology run
-//		LocalCluster cluster = new LocalCluster();
-//		cluster.submitTopology("kdt_pv_pageid", conf, builder.createTopology());
-//		Thread.sleep(60000000);
-//		cluster.shutdown();
-		StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
+		LocalCluster cluster = new LocalCluster();
+		cluster.submitTopology("kdt_pv_pageid", conf, builder.createTopology());
+		Thread.sleep(60000000);
+		cluster.shutdown();
+		//StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
 	
 	}
 }
