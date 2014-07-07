@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 import spouts.RedisSpout;
+import utils.DataSyncer;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
@@ -83,6 +84,13 @@ public class TopologyMain {
 //		Thread.sleep(60000000);
 //		cluster.shutdown();
 		StormSubmitter.submitTopology("kdt_pv_pageid", conf,builder.createTopology());
+		
+		
+		// redis to mysql
+//		interval = Long.valueOf(stormConf.get("interval").toString());
+//		syncer = DataSyncer.create(stormConf,interval);
+		
+		
 	
 	}
 }
