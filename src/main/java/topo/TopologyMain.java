@@ -45,10 +45,10 @@ public class TopologyMain {
 		
         //Configuration
 		Config conf = new Config();
-		//conf.setMaxTaskParallelism(3);
+		conf.setMaxTaskParallelism(20);
 		//conf.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 3);
 		conf.setDebug(testing);
-//		conf.setNumWorkers(10);
+		conf.setNumWorkers(20);
         conf.put("redis-host", REDIS_HOST);
         conf.put("redis-port", REDIS_PORT);
         conf.put("interval", MYSQL_INTERVAL);
@@ -74,7 +74,7 @@ public class TopologyMain {
 //		builder.setBolt("normalizer", new LogNormalizer(),1)
 //			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),12)
+		builder.setBolt("counter", new PvCounter(),17)
 			.fieldsGrouping("rs", new Fields("displayType","displayId"));
        
         //Topology run
