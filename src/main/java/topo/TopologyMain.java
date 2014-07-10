@@ -70,12 +70,12 @@ public class TopologyMain {
 		RedisSpout rs = new RedisSpout();
 		
 		//builder.setSpout("generator",new WordGenerator(),1);
-		builder.setSpout("rs",rs,3);
+		builder.setSpout("rs",rs,1);
 		
 //		builder.setBolt("normalizer", new LogNormalizer(),1)
 //			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),17)
+		builder.setBolt("counter", new PvCounter(),1)
 			.fieldsGrouping("rs", new Fields("displayType","displayId"));
        
         //Topology run
