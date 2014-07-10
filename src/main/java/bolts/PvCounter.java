@@ -90,8 +90,8 @@ public class PvCounter extends BaseBasicBolt {
 		
 		
 		// redis to mysql
-		interval = Long.valueOf(stormConf.get("interval").toString());
-		syncer = DataSyncer.create(stormConf,interval);
+//		interval = Long.valueOf(stormConf.get("interval").toString());
+//		syncer = DataSyncer.create(stormConf,interval);
 	}
 
 	@Override
