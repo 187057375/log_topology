@@ -75,8 +75,8 @@ public class TopologyMain {
 //		builder.setBolt("normalizer", new LogNormalizer(),1)
 //			.shuffleGrouping("generator");
 		
-		builder.setBolt("counter", new PvCounter(),1)
-			.fieldsGrouping("rs", new Fields("displayType","displayId"));
+		builder.setBolt("counter", new PvCounter(),1).noneGrouping("rs");
+//			.fieldsGrouping("rs", new Fields("displayType","displayId"));
        
         //Topology run
 
